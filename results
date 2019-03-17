@@ -1,0 +1,58 @@
+Hardware Specs:
+CPU: Intel Core i7 9700K @5.1GHz
+GPU: NVIDIA RTX 2080 SeaHawk EK
+RAM: 2x16GB 3200MHz CL16
+SSD: Samsung 970 Evo 500GB
+
+Results:
+python bot-detection.py
+
+Epoch 1/15
+2019-03-17 14:54:22.200409: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3601000000 Hz
+2019-03-17 14:54:22.200912: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x555c07822cf0 executing computations on platform Host. Devices:
+2019-03-17 14:54:22.200924: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2019-03-17 14:54:22.288287: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2019-03-17 14:54:22.288702: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x555c07a56950 executing computations on platform CUDA. Devices:
+2019-03-17 14:54:22.288714: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): GeForce RTX 2080, Compute Capability 7.5
+2019-03-17 14:54:22.288891: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+name: GeForce RTX 2080 major: 7 minor: 5 memoryClockRate(GHz): 1.86
+pciBusID: 0000:01:00.0
+totalMemory: 7.76GiB freeMemory: 6.99GiB
+2019-03-17 14:54:22.288900: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-03-17 14:54:22.289471: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-03-17 14:54:22.289477: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-03-17 14:54:22.289480: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-03-17 14:54:22.289629: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6796 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
+2019-03-17 14:54:22.963180: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+262144/262144 [==============================] - 432s 2ms/step - loss: 0.1176 - acc: 0.9606 - val_loss: 0.2660 - val_acc: 0.8960
+Epoch 2/15
+262144/262144 [==============================] - 433s 2ms/step - loss: 0.0846 - acc: 0.9704 - val_loss: 0.2322 - val_acc: 0.8950
+Epoch 3/15
+262144/262144 [==============================] - 438s 2ms/step - loss: 0.0728 - acc: 0.9736 - val_loss: 0.3534 - val_acc: 0.8860
+Epoch 4/15
+262144/262144 [==============================] - 439s 2ms/step - loss: 0.0649 - acc: 0.9761 - val_loss: 0.4525 - val_acc: 0.8770
+Epoch 5/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0578 - acc: 0.9788 - val_loss: 0.5215 - val_acc: 0.8705
+Epoch 6/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0523 - acc: 0.9806 - val_loss: 0.5308 - val_acc: 0.8600
+Epoch 7/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0481 - acc: 0.9823 - val_loss: 0.6126 - val_acc: 0.8725
+Epoch 8/15
+262144/262144 [==============================] - 425s 2ms/step - loss: 0.0442 - acc: 0.9836 - val_loss: 0.6433 - val_acc: 0.8675
+Epoch 9/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0411 - acc: 0.9848 - val_loss: 0.7171 - val_acc: 0.8650
+Epoch 10/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0385 - acc: 0.9856 - val_loss: 0.7837 - val_acc: 0.8605
+Epoch 11/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0368 - acc: 0.9862 - val_loss: 0.8028 - val_acc: 0.8540
+Epoch 12/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0356 - acc: 0.9867 - val_loss: 0.7383 - val_acc: 0.8595
+Epoch 13/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0343 - acc: 0.9873 - val_loss: 0.8816 - val_acc: 0.8460
+Epoch 14/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0335 - acc: 0.9874 - val_loss: 0.8001 - val_acc: 0.8710
+Epoch 15/15
+262144/262144 [==============================] - 427s 2ms/step - loss: 0.0327 - acc: 0.9877 - val_loss: 0.7645 - val_acc: 0.8685
+2000/2000 [==============================] - 1s 432us/step
+Test score: 0.7645125498771668
+Test accuracy: 0.8685
