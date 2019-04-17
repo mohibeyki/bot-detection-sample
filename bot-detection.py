@@ -34,7 +34,7 @@ def extract_tokens(doc):
     for line in doc:
         tokens = word_tokenize(line)
         stop_words = set(stopwords.words('english'))
-        tokens = [w for w in tokens if w not in stop_words and w.isalnum()]
+        tokens = [w for w in tokens if w not in stop_words]
         porter = PorterStemmer()
         stems = []
         for t in tokens:
@@ -43,23 +43,26 @@ def extract_tokens(doc):
     return total_stems
 
 
-def generate_vocab(bot_tokens, gen_tokens):
+def generate_vocab(bot_tokens, gen_tokens, max_features):
     vocab_counter = Counter()
     vocab_counter.update([t for row in bot_tokens for t in row])
     vocab_counter.update([t for row in gen_tokens for t in row])
     vocab = {key: val for key, val in vocab_counter.items() if val > 1}
-    vocab_list = sorted(vocab.items(), key=lambda x: x[1], reverse=True)
+    vocab_list = sorted(vocab.items(), key=lambda x: x[1], reverse=True)[:max_features]
     vocab = {text: i + 1 for i, (text, _) in enumerate(vocab_list)}
+    print(len(vocab))
     return vocab
 
 
-def get_sequence(tokens, vocab):
+def get_sequence(document, vocab):
     total_seq = []
-    for row in tokens:
+    for tweet in document:
         seq = []
-        for token in row:
-            if token in vocab:
-                seq.append(vocab[token])
+        for word in tweet:
+            one_hot = [0] * (len(vocab) + 1)
+            if word in vocab:
+                one_hot[vocab[word]] += 1
+            seq.append(one_hot)
         total_seq.append(seq)
     return total_seq
 
@@ -68,31 +71,30 @@ def get_dataset(bot_train_tokens, gen_train_tokens, vocab):
     bot_train_seq = get_sequence(bot_train_tokens, vocab)
     gen_train_seq = get_sequence(gen_train_tokens, vocab)
     x_train = bot_train_seq + gen_train_seq
-    y_train = [0 for _ in bot_train_seq] + [1 for _ in gen_train_seq]
+    y_train = [0] * len(bot_train_seq) + [1] * len(gen_train_seq)
     train_set = list(zip(x_train, y_train))
     random.shuffle(train_set)
     x, y = zip(*train_set)
     return np.array(x), np.array(y)
 
 
-def dataset_preparation():
-    bot_train_tokens = extract_tokens(load_doc('tr-bot-dump.csv'))
-    gen_train_tokens = extract_tokens(load_doc('tr-gen-dump.csv'))
+def dataset_preparation(max_features):
+    bot_train_tokens = extract_tokens(load_doc('tr-small-bot.csv'))
+    gen_train_tokens = extract_tokens(load_doc('tr-small-gen.csv'))
     bot_test_tokens = extract_tokens(load_doc('test-bot-dump.csv'))
     gen_test_tokens = extract_tokens(load_doc('test-gen-dump.csv'))
-    vocab = generate_vocab(bot_train_tokens, gen_train_tokens)
-    print(vocab)
+    vocab = generate_vocab(bot_train_tokens, gen_train_tokens, max_features)
     x_train, y_train = get_dataset(bot_train_tokens, gen_train_tokens, vocab)
     x_test, y_test = get_dataset(bot_test_tokens, gen_test_tokens, vocab)
     return (x_train, y_train), (x_test, y_test)
 
 
 def main():
-    max_features = 20000
+    max_features = 10000
     maxlen = 80
     batch_size = 32
     print('loading dataset')
-    (x_train, y_train), (x_test, y_test) = dataset_preparation()
+    (x_train, y_train), (x_test, y_test) = dataset_preparation(max_features)
     print(x_train.shape, 'train sequences')
     print(x_test.shape, 'test sequences')
     x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
